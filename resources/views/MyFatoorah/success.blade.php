@@ -16,7 +16,8 @@
     <div class="card-body">
       <div class="row">
           <div class="w-100">
-            <div class="text-sucess">Hello {{session('result.CustomerName')}}, your payment for {{session('result.InvoiceValue')}} {{session('result.Currency')}} is successful<div>
+          {{$user->name}}
+            <div class="text-sucess">Hello {{$CustomerName}}, your payment for {{$ItemName}} at {{$InvoiceDisplayValue}} is successful<div>
           </div>
         </div>
       </div>

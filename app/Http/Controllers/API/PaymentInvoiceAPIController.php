@@ -38,20 +38,16 @@ class PaymentInvoiceAPIController extends Controller
             $result = $this->myfatoorah->sendPayment(
                 
                 // customer name
-                auth()->user()->name,
+                auth()->user()->name || (auth()->user()->firstName.' '.auth()->user()->lastName),
                 request()->unitPrice * request()->quantity,
-
                 [
                     //     'MobileCountryCode',
-                    'CustomerMobile' => "56562123544",
-                    // auth::user()->phone
-                    //     'CustomerEmail',
+                    'CustomerMobile' => auth()->user()->phone,
                     'CustomerEmail'=>auth()->user()->email,
                     //     'Language' =>"AR",
-                    'CustomerReference' => auth()->user()->id,  //orderID
-                    // 'CustomerCivilId' => "321",
+                    'CustomerReference' => auth()->user()->id.time(),  //orderID
                     'UserDefinedField' => auth()->user()->id, //clientID
-                    //     'ExpireDate',
+                        // 'ExpireDate',
                     //     'CustomerAddress',
                     "InvoiceItems" => [
                         [
@@ -100,18 +96,9 @@ class PaymentInvoiceAPIController extends Controller
         }
     }
 
-    /**
-     * Display the specified Payment.
-     * GET|HEAD /mfpayments/{id}
-     *
-     * @param int $id
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function show($id)
     {
-        /** @var Payment $payment */
-            $payment = PaymentInvoice::where('id', $id)->first();
+        $payment = PaymentInvoice::where('id', $id)->first();
 
         if (empty($payment)) {
             return $this->sendError('Payment not found');

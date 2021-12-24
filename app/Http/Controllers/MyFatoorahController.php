@@ -101,7 +101,8 @@ class MyFatoorahController extends Controller
 
                 // Logic after success
                 $this->createInvoice($result['Data']);
-                return view('MyFatoorah.success')->with('result', $result['Data']);
+                // dd($result['Data']['InvoiceItems'][0]['ItemName']);
+                return view('MyFatoorah.success')->with(['ItemName'=>$result['Data']['InvoiceItems'][0]['ItemName']])->with(['InvoiceDisplayValue'=>$result['Data']['InvoiceDisplayValue']])->with(['CustomerName'=>$result['Data']['CustomerName']])->with(['user'=> auth()->user()]);
             }
         }
     }

@@ -187,6 +187,10 @@ Route::middleware('auth')->group(function () {
         'show'
     ]);
 
+    Route::get('/success', function() {
+        return view('MyFatoorah.success')->with(['user'=>'nankunda bright']);
+    });
+
     Route::post('/payment/index', 'MyFatoorahController@index');
     Route::get('/payment/success_callback', 'MyFatoorahController@successCallback');
     Route::get('/payment/fail_callback', 'MyFatoorahController@failCallback');
